@@ -35,7 +35,7 @@ public class Scoreboard(TimeProvider? timeProvider = default)
 
     public string GetSummary()
     {
-        var ordered = _matches.OrderByDescending(match => match.TotalScore);
+        var ordered = _matches.OrderByDescending(match => match.TotalScore).ThenByDescending(match => match.Started);
 
         return Print(ordered);
     }
