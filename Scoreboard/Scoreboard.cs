@@ -31,7 +31,7 @@ public class Scoreboard
 
     public string GetSummary()
     {
-        return "";
+        return ToString();
     }
 
     public override string ToString()
