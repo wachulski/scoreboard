@@ -31,7 +31,7 @@ public class Scoreboard
 
     public string GetSummary()
     {
-        var ordered = _matches.OrderByDescending(match => match.HomeTeamScore + match.AwayTeamScore);
+        var ordered = _matches.OrderByDescending(match => match.TotalScore);
 
         return Print(ordered);
     }

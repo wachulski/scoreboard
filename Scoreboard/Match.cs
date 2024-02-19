@@ -8,9 +8,11 @@ public class Match(int id, string homeTeam, string awayTeam)
 
     public string AwayTeam { get;} = awayTeam;
 
-    public int HomeTeamScore { get; set; }
+    public int HomeTeamScore { get; internal set; }
 
-    public int AwayTeamScore { get; set; }
+    public int AwayTeamScore { get; internal set; }
+
+    public int TotalScore => HomeTeamScore + AwayTeamScore;
 
     public override string ToString()
     {
