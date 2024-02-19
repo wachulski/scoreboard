@@ -44,4 +44,14 @@ public class ScoreboardTests
         
         _sut.ToString().Should().BeEmpty();
     }
+
+    [Fact]
+    public void GetSummary_WhenSingleMatch_ShouldReturnIt()
+    {
+        _sut.StartMatch("Italy", "England");
+
+        var actual = _sut.GetSummary();
+        
+        actual.Should().Be("Italy 0 - England 0");
+    }
 }

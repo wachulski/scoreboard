@@ -29,6 +29,11 @@ public class Scoreboard
         _matches.Remove(_matches.Single(match => matchId == match.Id));
     }
 
+    public string GetSummary()
+    {
+        return "";
+    }
+
     public override string ToString()
     {
         var sb = new StringBuilder();
