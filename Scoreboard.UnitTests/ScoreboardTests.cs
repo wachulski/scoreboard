@@ -35,6 +35,36 @@ public class ScoreboardTests
         
         _sut.ToString().Should().Contain("Reds 2 - Yellows 3");
     }
+    
+    [Fact]
+    public void UpdateMatch_WhenSettingToSameScore_ShouldAcceptThat()
+    {
+        var matchId = _sut.StartMatch("Italy", "Wales");
+        
+        _sut.UpdateMatch(matchId, 0, 0);
+        
+        _sut.ToString().Should().Be("Italy 0 - Wales 0");
+    }
+    
+    [Fact]
+    public void UpdateMatch_WhenSettingDownwards_ShouldAcceptThat()
+    {
+        var matchId = _sut.StartMatch("Italy", "Wales");
+        
+        _sut.UpdateMatch(matchId, 0, 1);
+        _sut.UpdateMatch(matchId, 0, 2);
+        _sut.UpdateMatch(matchId, 0, 1);
+        
+        _sut.ToString().Should().Be("Italy 0 - Wales 1");
+    }
+    
+    [Fact]
+    public void UpdateMatch_WhenReferringNonExisting_ShouldThrowArgumentException()
+    {
+        var matchId = _sut.StartMatch("Italy", "Wales");
+
+        Assert.Throws<ArgumentException>(() => _sut.UpdateMatch(matchId + 1, 2, 0));
+    }
 
     [Fact]
     public void FinishMatch_WhenOnBoard_ShouldRemoveFromTheBoard()
