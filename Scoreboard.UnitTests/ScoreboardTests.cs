@@ -54,4 +54,21 @@ public class ScoreboardTests
         
         actual.Should().Be("Italy 0 - England 0");
     }
+
+    [Fact]
+    public void GetSummary_WhenMultipleMatches_ShouldOrderByTotalScore()
+    {
+        var italyEngland = _sut.StartMatch("Italy", "England");
+        _sut.UpdateMatch(italyEngland, 2, 1);
+        var franceGermany = _sut.StartMatch("France", "Germany");
+        _sut.UpdateMatch(franceGermany, 1, 1);
+        var spainDenmark = _sut.StartMatch("Spain", "Denmark");
+        _sut.UpdateMatch(spainDenmark, 0, 4);
+        
+        var actual = _sut.GetSummary();
+        
+        actual.Should().Be(@"Spain 0 - Denmark 4
+Italy 2 - England 1
+France 1 - Germany 1".ReplaceLineEndings());
+    }
 }
