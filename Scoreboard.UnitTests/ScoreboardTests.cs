@@ -81,7 +81,7 @@ public class ScoreboardTests
     {
         var matchId = _sut.StartMatch("Italy", "Wales");
 
-        Assert.Throws<ArgumentException>(() => _sut.FinishMatch(matchId));
+        Assert.Throws<ArgumentException>(() => _sut.FinishMatch(matchId+1));
     }
 
     [Fact]

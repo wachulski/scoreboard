@@ -33,7 +33,12 @@ public class Scoreboard(TimeProvider? timeProvider = default)
 
     public void FinishMatch(int matchId)
     {
-        _matches.Remove(_matches.Single(match => matchId == match.Id));
+        var existing = _matches.SingleOrDefault(match => matchId == match.Id);
+        
+        if (existing == null)
+            throw new ArgumentException($"Match of given ID ({matchId}) not found", nameof(matchId));
+        
+        _matches.Remove(existing);
     }
 
     public string GetSummary()
