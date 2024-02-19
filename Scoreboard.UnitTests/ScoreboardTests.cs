@@ -71,4 +71,22 @@ public class ScoreboardTests
 Italy 2 - England 1
 France 1 - Germany 1".ReplaceLineEndings());
     }
+
+    [Fact]
+    public void GetSummary_WhenManyMatchesHaveSameTotalScore_ShouldBreakTieByStartTimestamp()
+    {
+        var italyEngland = _sut.StartMatch("Italy", "England");
+        var franceGermany = _sut.StartMatch("France", "Germany");
+        var spainDenmark = _sut.StartMatch("Spain", "Denmark");
+
+        _sut.UpdateMatch(italyEngland, 3, 1);
+        _sut.UpdateMatch(franceGermany, 2, 2);
+        _sut.UpdateMatch(spainDenmark, 0, 4);
+
+        var actual = _sut.GetSummary();
+        
+        actual.Should().Be(@"Spain 0 - Denmark 4
+France 2 - Germany 2
+Italy 3 - England 1".ReplaceLineEndings());
+    }
 }
