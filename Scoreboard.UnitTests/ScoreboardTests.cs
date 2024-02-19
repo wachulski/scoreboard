@@ -4,47 +4,44 @@ namespace Scoreboard.UnitTests;
 
 public class ScoreboardTests
 {
+    private readonly Scoreboard _sut = new ();
+
     [Fact]
     public void StartMatch_WhenTwoTeamsProvided_ShouldAddTheMatchToTheBoard()
     {
-        var scoreboard = new Scoreboard();
+        _sut.StartMatch("Home Team", "Away Team");
 
-        scoreboard.StartMatch("Home Team", "Away Team");
-
-        scoreboard.ToString().Should().Be("Home Team 0 - Away Team 0");
+        _sut.ToString().Should().Be("Home Team 0 - Away Team 0");
     }
 
     [Fact]
     public void UpdateMatch_WhenNewScorePairProvided_ShouldReplaceTheScoreWithNewScore()
     {
-        var scoreboard = new Scoreboard();
-        var matchId = scoreboard.StartMatch("Home Team", "Away Team");
+        var matchId = _sut.StartMatch("Home Team", "Away Team");
         
-        scoreboard.UpdateMatch(matchId, 2, 3);
+        _sut.UpdateMatch(matchId, 2, 3);
         
-        scoreboard.ToString().Should().Be("Home Team 2 - Away Team 3");
+        _sut.ToString().Should().Be("Home Team 2 - Away Team 3");
     }
     
     [Fact]
     public void UpdateMatch_WhenOtherMatchesOnBoard_ShouldReplaceTheOneReferencedByTheCaller()
     {
-        var scoreboard = new Scoreboard();
-        scoreboard.StartMatch("Blues", "Greens");
-        var matchId = scoreboard.StartMatch("Reds", "Yellows");
+        _sut.StartMatch("Blues", "Greens");
+        var matchId = _sut.StartMatch("Reds", "Yellows");
         
-        scoreboard.UpdateMatch(matchId, 2, 3);
+        _sut.UpdateMatch(matchId, 2, 3);
         
-        scoreboard.ToString().Should().Contain("Reds 2 - Yellows 3");
+        _sut.ToString().Should().Contain("Reds 2 - Yellows 3");
     }
 
     [Fact]
     public void FinishMatch_WhenOnBoard_ShouldRemoveFromTheBoard()
     {
-        var scoreboard = new Scoreboard();
-        var matchId = scoreboard.StartMatch("Reds", "Yellows");
+        var matchId = _sut.StartMatch("Reds", "Yellows");
 
-        scoreboard.FinishMatch(matchId);
+        _sut.FinishMatch(matchId);
         
-        scoreboard.ToString().Should().BeEmpty();
+        _sut.ToString().Should().BeEmpty();
     }
 }
