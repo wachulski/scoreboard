@@ -75,6 +75,14 @@ Home Team 0 - Away Team 0".ReplaceLineEndings());
 
         Assert.Throws<ArgumentException>(() => _sut.UpdateMatch(matchId + 1, 2, 0));
     }
+    
+    [Fact]
+    public void UpdateMatch_WhenProvidedNegativeScore_ShouldThrowArgumentException()
+    {
+        var matchId = _sut.StartMatch("Italy", "Wales");
+
+        Assert.Throws<ArgumentException>(() => _sut.UpdateMatch(matchId, -1, 0));
+    }
 
     [Fact]
     public void FinishMatch_WhenOnBoard_ShouldRemoveFromTheBoard()
