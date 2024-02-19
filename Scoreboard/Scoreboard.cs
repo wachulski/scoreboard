@@ -2,14 +2,18 @@
 
 namespace Scoreboard;
 
-public class Scoreboard
+public class Scoreboard(TimeProvider? timeProvider = default)
 {
     private int _nextMatchId = 0;
     private readonly IList<Match> _matches = new List<Match>();
-    
+    private readonly TimeProvider _timeProvider = timeProvider ?? TimeProvider.System;
+
     public int StartMatch(string homeTeam, string awayTeam)
     {
-        var match = new Match(_nextMatchId, homeTeam, awayTeam);
+        var match = new Match(_nextMatchId, homeTeam, awayTeam)
+        {
+            Started = _timeProvider.GetUtcNow().DateTime
+        };
         _matches.Add(match);
         _nextMatchId++;
         

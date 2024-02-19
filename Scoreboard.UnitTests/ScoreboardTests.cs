@@ -1,10 +1,11 @@
 using FluentAssertions;
+using Microsoft.Extensions.Time.Testing;
 
 namespace Scoreboard.UnitTests;
 
 public class ScoreboardTests
 {
-    private readonly Scoreboard _sut = new ();
+    private Scoreboard _sut = new ();
 
     [Fact]
     public void StartMatch_WhenTwoTeamsProvided_ShouldAddTheMatchToTheBoard()
@@ -75,8 +76,13 @@ France 1 - Germany 1".ReplaceLineEndings());
     [Fact]
     public void GetSummary_WhenManyMatchesHaveSameTotalScore_ShouldBreakTieByStartTimestamp()
     {
+        var fakeTime = new FakeTimeProvider(DateTimeOffset.Now);
+        _sut = new Scoreboard(fakeTime);
+        fakeTime.Advance(TimeSpan.FromSeconds(1));
         var italyEngland = _sut.StartMatch("Italy", "England");
+        fakeTime.Advance(TimeSpan.FromSeconds(2));
         var franceGermany = _sut.StartMatch("France", "Germany");
+        fakeTime.Advance(TimeSpan.FromSeconds(3));
         var spainDenmark = _sut.StartMatch("Spain", "Denmark");
 
         _sut.UpdateMatch(italyEngland, 3, 1);
