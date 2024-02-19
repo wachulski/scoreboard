@@ -9,6 +9,11 @@ public class Scoreboard
         _matches.Add(new Match(homeTeam, awayTeam));
     }
 
+    public void UpdateMatch(int homeTeamScore, int awayTeamScore)
+    {
+        
+    }
+
     public override string ToString()
     {
         return _matches[0].ToString();
