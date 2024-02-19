@@ -32,22 +32,17 @@ public class Scoreboard
     public string GetSummary()
     {
         var ordered = _matches.OrderByDescending(match => match.HomeTeamScore + match.AwayTeamScore);
-        
-        var sb = new StringBuilder();
-        
-        foreach (var match in ordered)
-        {
-            sb.AppendLine(match.ToString());
-        }
 
-        return sb.ToString().TrimEnd('\n').TrimEnd('\r');
+        return Print(ordered);
     }
 
-    public override string ToString()
+    public override string ToString() => Print(_matches);
+
+    private static string Print(IEnumerable<Match> matches)
     {
         var sb = new StringBuilder();
         
-        foreach (var match in _matches)
+        foreach (var match in matches)
         {
             sb.AppendLine(match.ToString());
         }
