@@ -24,6 +24,10 @@ public class Scoreboard
         existing.AwayTeamScore = awayTeamScore;
     }
 
+    public void FinishMatch(int matchId)
+    {
+    }
+
     public override string ToString()
     {
         var sb = new StringBuilder();

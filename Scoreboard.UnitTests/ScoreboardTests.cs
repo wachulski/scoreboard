@@ -36,4 +36,15 @@ public class ScoreboardTests
         
         scoreboard.ToString().Should().Contain("Reds 2 - Yellows 3");
     }
+
+    [Fact]
+    public void FinishMatch_WhenOnBoard_ShouldRemoveFromTheBoard()
+    {
+        var scoreboard = new Scoreboard();
+        var matchId = scoreboard.StartMatch("Reds", "Yellows");
+
+        scoreboard.FinishMatch(matchId);
+        
+        scoreboard.ToString().Should().BeEmpty();
+    }
 }
