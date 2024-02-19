@@ -4,12 +4,13 @@ public class Scoreboard
 {
     private readonly IList<Match> _matches = new List<Match>();
     
-    public void StartMatch(string homeTeam, string awayTeam)
+    public int StartMatch(string homeTeam, string awayTeam)
     {
         _matches.Add(new Match(homeTeam, awayTeam));
+        return 0;
     }
 
-    public void UpdateMatch(int homeTeamScore, int awayTeamScore)
+    public void UpdateMatch(int matchId, int homeTeamScore, int awayTeamScore)
     {
         
     }
