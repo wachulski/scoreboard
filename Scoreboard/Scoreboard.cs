@@ -31,7 +31,16 @@ public class Scoreboard
 
     public string GetSummary()
     {
-        return ToString();
+        var ordered = _matches.OrderByDescending(match => match.HomeTeamScore + match.AwayTeamScore);
+        
+        var sb = new StringBuilder();
+        
+        foreach (var match in ordered)
+        {
+            sb.AppendLine(match.ToString());
+        }
+
+        return sb.ToString().TrimEnd('\n').TrimEnd('\r');
     }
 
     public override string ToString()
