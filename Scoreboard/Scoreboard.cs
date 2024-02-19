@@ -22,10 +22,7 @@ public class Scoreboard(TimeProvider? timeProvider = default)
 
     public void UpdateMatch(int matchId, int homeTeamScore, int awayTeamScore)
     {
-        var existing = _matches.SingleOrDefault(match => matchId == match.Id);
-        
-        if (existing == null)
-            throw new ArgumentException($"Match of given ID ({matchId}) not found", nameof(matchId));
+        var existing = EnsureMatch(matchId);
 
         existing.HomeTeamScore = homeTeamScore;
         existing.AwayTeamScore = awayTeamScore;
@@ -33,10 +30,7 @@ public class Scoreboard(TimeProvider? timeProvider = default)
 
     public void FinishMatch(int matchId)
     {
-        var existing = _matches.SingleOrDefault(match => matchId == match.Id);
-        
-        if (existing == null)
-            throw new ArgumentException($"Match of given ID ({matchId}) not found", nameof(matchId));
+        var existing = EnsureMatch(matchId);
         
         _matches.Remove(existing);
     }
@@ -60,5 +54,15 @@ public class Scoreboard(TimeProvider? timeProvider = default)
         }
 
         return sb.ToString().TrimEnd('\n').TrimEnd('\r');
+    }
+
+    private Match EnsureMatch(int matchId)
+    {
+        var existing = _matches.SingleOrDefault(match => matchId == match.Id);
+
+        if (existing == null)
+            throw new ArgumentException($"Match of given ID ({matchId}) not found", nameof(matchId));
+        
+        return existing;
     }
 }
