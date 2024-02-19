@@ -23,6 +23,9 @@ public class Scoreboard(TimeProvider? timeProvider = default)
     public void UpdateMatch(int matchId, int homeTeamScore, int awayTeamScore)
     {
         var existing = _matches.SingleOrDefault(match => matchId == match.Id);
+        
+        if (existing == null)
+            throw new ArgumentException($"Match of given ID ({matchId}) not found", nameof(matchId));
 
         existing.HomeTeamScore = homeTeamScore;
         existing.AwayTeamScore = awayTeamScore;
