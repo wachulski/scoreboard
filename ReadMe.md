@@ -6,3 +6,4 @@
   Since the board is meant to be 'live', then we assume it may report '0 - 1' and then back to '0 - 0'.
 2. For the sake of simplicity the summary is string based. Normally it should return a structure and output formatting
   should be done by the caller.
+3. For simplicity we do not track team names and hence allow for duplicates.

@@ -14,6 +14,16 @@ public class ScoreboardTests
 
         _sut.ToString().Should().Be("Home Team 0 - Away Team 0");
     }
+    
+    [Fact]
+    public void StartMatch_WhenTwoTeamsProvidedSameOnceAgain_ShouldAllowForThat()
+    {
+        _sut.StartMatch("Home Team", "Away Team");
+        _sut.StartMatch("Home Team", "Away Team");
+
+        _sut.ToString().Should().Be(@"Home Team 0 - Away Team 0
+Home Team 0 - Away Team 0".ReplaceLineEndings());
+    }
 
     [Fact]
     public void UpdateMatch_WhenNewScorePairProvided_ShouldReplaceTheScoreWithNewScore()
