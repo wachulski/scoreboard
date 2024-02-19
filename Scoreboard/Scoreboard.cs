@@ -22,10 +22,21 @@ public class Scoreboard(TimeProvider? timeProvider = default)
 
     public void UpdateMatch(int matchId, int homeTeamScore, int awayTeamScore)
     {
+        EnsureScoreNonNegative(homeTeamScore, nameof(homeTeamScore));
+        EnsureScoreNonNegative(awayTeamScore, nameof(awayTeamScore));
+        
         var existing = EnsureMatch(matchId);
 
         existing.HomeTeamScore = homeTeamScore;
         existing.AwayTeamScore = awayTeamScore;
+        
+        return;
+
+        void EnsureScoreNonNegative(int score, string paramName)
+        {
+            if (score < 0)
+                throw new ArgumentException($"Score {score} cannot be negative", paramName);
+        }
     }
 
     public void FinishMatch(int matchId)
