@@ -26,6 +26,7 @@ public class Scoreboard
 
     public void FinishMatch(int matchId)
     {
+        _matches.Remove(_matches.Single(match => matchId == match.Id));
     }
 
     public override string ToString()
