@@ -1,13 +1,19 @@
-﻿namespace Scoreboard;
+﻿using System.Text;
+
+namespace Scoreboard;
 
 public class Scoreboard
 {
+    private int _nextMatchId = 0;
     private readonly IList<Match> _matches = new List<Match>();
     
     public int StartMatch(string homeTeam, string awayTeam)
     {
-        _matches.Add(new Match(0, homeTeam, awayTeam));
-        return 0;
+        var match = new Match(_nextMatchId, homeTeam, awayTeam);
+        _matches.Add(match);
+        _nextMatchId++;
+        
+        return match.Id;
     }
 
     public void UpdateMatch(int matchId, int homeTeamScore, int awayTeamScore)
@@ -20,6 +26,13 @@ public class Scoreboard
 
     public override string ToString()
     {
-        return _matches[0].ToString();
+        var sb = new StringBuilder();
+        
+        foreach (var match in _matches)
+        {
+            sb.AppendLine(match.ToString());
+        }
+
+        return sb.ToString().TrimEnd('\n').TrimEnd('\r');
     }
 }
