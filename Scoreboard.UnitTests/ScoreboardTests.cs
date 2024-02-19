@@ -75,6 +75,14 @@ public class ScoreboardTests
         
         _sut.ToString().Should().BeEmpty();
     }
+    
+    [Fact]
+    public void FinishMatch_WhenNotOnBoard_ShouldThrowArgumentException()
+    {
+        var matchId = _sut.StartMatch("Italy", "Wales");
+
+        Assert.Throws<ArgumentException>(() => _sut.FinishMatch(matchId));
+    }
 
     [Fact]
     public void GetSummary_WhenSingleMatch_ShouldReturnIt()
